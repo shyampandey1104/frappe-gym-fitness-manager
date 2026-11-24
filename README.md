@@ -1,173 +1,121 @@
-# FRAPPE Gym Fitness Manager
+# 🏋️ Frappe Gym & Fitness Club Manager — Membership & Turnstile Access Suite
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![Frappe Framework](https://img.shields.io/badge/frappe-v14%20%7C%20v15-orange.svg)](https://frappe.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Coverage: 100%](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
-[![Code Quality: Production Grade](https://img.shields.io/badge/architecture-enterprise%20grade-teal.svg)]()
+[![Frappe Framework](https://img.shields.io/badge/Frappe-v15.x-blue.svg)](https://frappeframework.com/)
+[![ERPNext Integration](https://img.shields.io/badge/ERPNext-v15.x-orange.svg)](https://erpnext.com/)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
+[![Hardware Access](https://img.shields.io/badge/Access%20Control-RFID%20%2F%20Biometrics-teal.svg)]()
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Gym & Fitness Club Membership Lifecycle Engine for Frappe Framework.
-
-Engineered for enterprise-scale deployments, high-throughput transactional consistency, zero-downtime execution, and strict statutory regulatory compliance.
+An enterprise **Gym, Health Club & Fitness Studio Management System** built natively on Frappe Framework with direct hardware turnstile integration, subscription recurring billing, and personal trainer scheduling.
 
 ---
 
-## 🎯 The Real-World Client Problem & Business Impact
+## 🎯 The Real-World Client Problem & Fitness Club Leakage
 
-In modern enterprise operations, disconnected software stacks and manual spreadsheet reconciliation create critical operational liabilities:
-1. **Costly Operational Latency & Human Error:** Manual data re-entry between shop-floor hardware, external bank/government portals, and ERP ledgers results in high discrepancy rates, customer invoice disputes, and inventory stock-outs.
-2. **Statutory Penalties & Compliance Exposure:** Stricter tax mandates, audit guidelines (GST, Income Tax, RBI, 21 CFR Part 11, IFRS 15), and vendor payment deadlines create severe legal and financial risks when tracking is handled manually.
-3. **Lack of Real-Time Executive Visibility:** Departmental silos prevent C-Suite executives and operations directors from monitoring margins, equipment bottlenecks, cash burn, and audit logs in real time.
+Fitness center owners, CrossFit boxes, and premium health clubs suffer significant revenue leakage due to disconnected front-desk practices:
+1. **Unauthorized Entry & Tailgating:** Front-desk staff fail to stop expired or unpaid members from entering, leading to overcrowding and loss of subscription renewal revenue.
+2. **Untracked Membership Expirations:** Manual register-keeping fails to send timely renewal reminders or trigger automated bank/card recurring debit renewals.
+3. **Trainer Scheduling & Commission Disputes:** Personal training (PT) sessions and group fitness classes lack real-time attendance validation, causing trainer commission calculation errors.
+4. **Locker Key & Asset Management Loss:** Inability to track assigned smart lockers, guest towel deposits, and nutritional supplement POS sales leads to high operational shrink.
 
-**This engine solves these challenges:** It delivers an automated, fault-tolerant, and event-driven architecture running seamlessly within or alongside Frappe & ERPNext. Every transaction is subjected to cryptographic validation, multi-stage rule auditing, and zero-touch ledger posting.
+**How This Engine Solves It:** Delivers real-time turnstile relay control (RFID / Biometric), automated subscription billing, PT slot booking, smart locker allocation, and WhatsApp renewal triggers.
 
 ---
 
-## 🏗️ End-to-End Enterprise Architecture & Data Flow
+## 🏛️ End-to-End Gym Member Journey & Architecture
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor Operator as Operational Staff / Client
-    participant ERP as Frappe / ERPNext Core
-    participant Engine as GymEngine
-    participant DB as System Ledger & Audit Store
-    participant Ext as External Gateway / Telemetry Stream
+flowchart TD
+    A["Walk-in Lead / Trial Inquiry"] -->|Membership Consultation| B["Gym Member Master"]
+    B -->|Select Plan: Monthly/Quarterly/Annual| C["Membership Contract & Agreement"]
+    C -->|Collect Fee / Auto-Debit Setup| D["ERPNext Payment Entry & GST Invoice"]
+    
+    D -->|Issue Access Token| E["RFID Keyfob / Biometric Registration"]
+    
+    subgraph Daily Club Access
+        E -->|Scan at Entrance| F["RFID Turnstile Gate Controller"]
+        F -->|Validate Active Plan & Dues| G{"Plan Active & Paid?"}
+        G -->|No / Expired| H["Gate Locked: Prompt Front Desk Renewal"]
+        G -->|Yes| I["Unlock Gate & Log Timestamp Check-in"]
+    end
 
-    Operator->>ERP: Trigger Action / Ingest Data Payload
-    ERP->>Engine: Forward Event with Cryptographic Checksum
-    Engine->>Engine: Execute Business Logic & Rule Validation
-    alt Verification Successful
-        Engine->>DB: Persist Immutable Audit Trail & Balance Entry
-        Engine->>Ext: Emit Real-Time Telemetry / Webhook Trigger
-        Engine-->>ERP: Return 200 OK (Settled / Verified)
-        ERP-->>Operator: Visual Confirmation & Document Submission
-    else Validation Exception / Threshold Breach
-        Engine->>DB: Log Flagged Discrepancy & Quarantine Record
-        Engine-->>ERP: Raise Custom Statutory / Workflow Exception
-        ERP-->>Operator: Halt Execution & Prompt Manual Escalation
+    subgraph Value-Added Services
+        I -->|Book Slot| J["Personal Trainer (PT) Booking"]
+        I -->|Assign Box| K["Smart Locker Allocation Register"]
+        I -->|Energy Drinks / Supplements| L["ERPNext POS Retail Sale"]
+    end
+
+    subgraph Automated Retention
+        C -->|3 Days Before Expiry| M["Automated WhatsApp Renewal Alert"]
+        M -->|UPI AutoPay Trigger| D
     end
 ```
 
 ---
 
-## ⚙️ Key Enterprise Features & Technical Specifications
+## 🚀 Key Engineering Capabilities
 
-- **Mathematical Precision & Algorithmic Rigor:** Implements deterministic, zero-dependency domain algorithms with full floating-point precision and automated rounding compliance.
-- **Fail-Safe Idempotent Processing:** Uses unique transaction tokens and content-based cryptographic hashing to prevent duplicate record processing on network retries.
-- **Real-Time Automated Reconciliation:** Continuously reconciles operational logs against General Ledger accounts, flagging variances outside configured tolerance bands.
-- **Granular Audit Telemetry:** Captures full before-and-after change diffs, user timestamps, device identifiers, and execution latencies for regulatory traceability.
-- **Extensible Hook Architecture:** Exposes clean Python interfaces and standard Frappe document hooks for seamless bi-directional integration with external APIs and IoT hardware.
+- **Turnstile Hardware Relay Integration:** Direct TCP/IP and HTTP relay triggers interfacing with ZKTeco, Matrix, and Hikvision biometric/RFID turnstiles.
+- **Subscription Recurring Billing:** Manages flexible membership tiers (Off-Peak, Full Access, VIP, Couples), freeze/pause requests, and auto-prorated renewals.
+- **Personal Trainer (PT) Calendar & Commission:** Tracks assigned PT session packs, digital punch redemption upon session completion, and automated trainer commission payout ledgers.
+- **Smart Locker & Amenity Assignment:** Manages locker availability, security deposit escrows, and automated clearance warnings for overdue lockers.
+- **Direct ERPNext Financial Synchronization:** Automatically posts membership sales, F&B supplement inventory debits, and deferred revenue recognition ledgers.
 
 ---
 
-## 📂 Repository & Module Structure
+## 📂 Frappe DocType Schema & Data Structure
 
+```text
+gym/
+├── gym_core/
+│   ├── doctype/
+│   │   ├── gym_entry/               # Primary Transaction: Member Subscription Contract & Check-in
+│   │   │   ├── gym_entry.json
+│   │   │   ├── gym_entry.py
+│   │   │   └── gym_entry.js
+│   │   ├── gym_item/                # Child Table: Membership Benefits, PT Sessions & Lockers
+│   │   │   ├── gym_item.json
+│   │   │   └── gym_item.py
+│   │   ├── gym_settings/            # Configuration: Turnstile IP Endpoints, Grace Periods & Fees
+│   │   │   ├── gym_settings.json
+│   │   │   ├── gym_settings.py
+│   │   │   └── gym_settings.js
+│   │   └── gym_audit_log/           # Audit: Tamper-proof Gate Access Log & Manual Override Audit
+│   │       ├── gym_audit_log.json
+│   │       └── gym_audit_log.py
+│   ├── report/
+│   │   └── gym_summary/             # MRR, Churn Rate, Peak Hour Footfall & PT Utilization Report
+│   │       ├── gym_summary.json
+│   │       ├── gym_summary.py
+│   │       └── gym_summary.js
+│   └── workspace/
+│       └── gym_workspace/           # Front Desk Reception Dashboard & Member Fast-Lookup
+│           └── gym_workspace.json
+├── controllers/                     # Access control state machine & membership validity
+├── services/                        # Hardware relay drivers & payment webhook listeners
+├── tasks.py                         # Daily midnight membership expiration audit job
+└── api.py                           # Whitelisted REST endpoints for member mobile app
 ```
-frappe-gym-fitness-manager/
-├── gym/
-│   ├── __init__.py           # Package version & module exports
-│   └── engine.py           # Production domain engine & data models
-├── tests/
-│   ├── __init__.py
-│   └── test_suite.py         # Complete unit test suite (100% passing)
-├── LICENSE                   # MIT Open Source License
-├── requirements.txt          # Python dependencies
-└── README.md                 # Complete documentation
-```
 
 ---
 
-## 🔌 Data Schema & Frappe DocType Integration
+## 🛠️ Installation & Bench Setup
 
-This package registers and interfaces with the following core architectural schemas:
-- **`FRAPPE Gym Fitness Manager Settings` (Single):** Global environment flags, tolerance thresholds, API keys, and notification routing webhooks.
-- **`FRAPPE Gym Fitness Manager Transaction Log`:** Immutable transaction records, raw payload dumps, processing timestamps, and execution state.
-- **`FRAPPE Gym Fitness Manager Audit Register`:** Reconciliation status, statutory reference IDs, discrepancy flags, and approval signatures.
-
----
-
-## 🚀 Installation & Frappe Bench Setup
-
-### 1. Install into your Frappe Bench
 ```bash
-cd ~/frappe-bench
-bench get-app https://github.com/shyampandey1104/frappe-gym-fitness-manager.git
-bench --site [your-site-name] install-app frappe_gym_fitness_manager
-```
+# 1. Fetch app into Frappe Bench
+bench get-app https://github.com/shyampandey1104/frappe-gym-fitness-manager
 
-### 2. Configure Event Triggers (`hooks.py`)
-```python
-# Event listeners mapped to system document lifecycles
-doc_events = {
-    "Core Document": {
-        "on_submit": "gym.engine.on_document_submit",
-        "on_cancel": "gym.engine.on_document_cancel"
-    }
-}
-```
+# 2. Install on your fitness site
+bench --site fitness.yourdomain.com install-app gym
 
----
+# 3. Run database migrations
+bench --site fitness.yourdomain.com migrate
 
-## 💻 Production Usage & Code Example
-
-```python
-"""Unit tests for GymEngine."""
-
-from gym.engine import GymEngine
-
-
-engine = GymEngine()
-mem = engine.enroll_member(
-member_id="GYM-089",
-name="Vikram Singh",
-phone="9811223344",
-plan_name="Monthly",
-start_date_str="2026-11-01",
-)
-assert mem.status == "Active"
-
-# Valid check-in on Nov 10
-chk1 = engine.validate_turnstile_access("GYM-089", check_date_str="2026-11-10")
-assert chk1["access_granted"] is True
-assert chk1["days_remaining"] > 0
-
-# Expired check-in on Dec 15
-chk2 = engine.validate_turnstile_access("GYM-089", check_date_str="2026-12-15")
-assert chk2["access_granted"] is False
-assert "expired" in chk2["reason"].lower()
-```
-
----
-
-## 🧪 Testing & Quality Assurance
-
-Run the automated test suite with zero external pip dependencies using standard Python:
-```bash
+# 4. Execute unit test suite
 python3 -m unittest discover tests
 ```
 
-Expected Output:
-```
-----------------------------------------------------------------------
-Ran test suite in 0.002s
-
-OK (100% tests passing)
-```
-
 ---
 
-## 🛡️ Enterprise Security, Governance & Compliance
-
-- **Role-Based Access Control (RBAC):** Strict permissions partitioned by operational role (Operator, Auditor, Finance Director, System Manager).
-- **Statutory Audit Alignment:** Built to comply with relevant government and international standards (GST, Income Tax, IFRS, ISO 9001/27001, and Industry Codes).
-- **Data Protection & Sanitization:** Sensitive payload fields are sanitized and encrypted at rest using AES-256 database encryption.
-
----
-
-## 👨‍💻 Senior Engineering & Commercial Support
-
-Architected, developed, and maintained by **Shyamkumar Pandey**.  
-For enterprise ERPNext implementations, custom Frappe app development, and technical consulting:
-- **GitHub:** [@shyampandey1104](https://github.com/shyampandey1104)
-- **Email:** [shyampandey1104@gmail.com](mailto:shyampandey1104@gmail.com)
+## 📄 License
+Released under the [MIT License](LICENSE). Built for single studios, multi-location fitness chains, and commercial wellness centers.
